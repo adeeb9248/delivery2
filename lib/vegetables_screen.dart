@@ -7,7 +7,7 @@ class VegetablesScreen extends StatelessWidget {
 
   final List<Product> vegetables = [
     Product(
-      id: 0,
+      id: 1,
       name: 'Boston Lettuce',
       price: '1.10 €/piece',
       description: 'Fresh Boston Lettuce, perfect for your salads!',
@@ -17,7 +17,7 @@ class VegetablesScreen extends StatelessWidget {
       quantity: 10,
     ),
     Product(
-      id: 0,
+      id: 2,
       name: 'Purple Cauliflower',
       price: '1.85 €/kg',
       description: 'Exotic purple cauliflower, rich in antioxidants.',
@@ -26,7 +26,7 @@ class VegetablesScreen extends StatelessWidget {
       quantity: 10,
     ),
     Product(
-      id: 0,
+      id: 3,
       name: 'Savoy Cabbage',
       price: '1.45 €/kg',
       description: 'Crunchy savoy cabbage, ideal for your recipes.',

@@ -65,6 +65,7 @@ class ProductsScreen extends StatelessWidget {
               // List of Products
               Expanded(
                 child: ListView.builder(
+                  itemCount:  value.items.length,
                   itemBuilder: (BuildContext context, int index) =>
                       _buildProductCard(context, value.items[index]),
                 ),

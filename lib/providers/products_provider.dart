@@ -19,7 +19,7 @@ class ProductsProvider extends ChangeNotifier {
     var products = Products.fromJson(data);
 
     _items = products.listOfProduct ?? [];
-    notifyListeners();;
+    notifyListeners();
   }
 
   getTopProductsAsync() async {

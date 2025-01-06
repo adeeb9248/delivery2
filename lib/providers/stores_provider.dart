@@ -53,9 +53,9 @@ class StoresProvider extends ChangeNotifier {
       }, 
     );
 
-    var products = Stores.fromJson(data);
+    var stores = Stores.fromJson(data);
 
-    _items = products.listOfStore ?? [];
+    _items = stores.listOfStore ?? [];
     notifyListeners();
   }
 
@@ -66,7 +66,7 @@ class StoresProvider extends ChangeNotifier {
         body: jsonEncode(productToSendList?.toJson())
     );
 
-    message = data as String;
+    message = data['message'] as String;
 
     notifyListeners();
   }

@@ -44,6 +44,7 @@ class StoresScreen extends StatelessWidget {
               // List of Stores
               Expanded(
                 child: ListView.builder(
+                  itemCount:  value.items.length,
                   itemBuilder: (context, index) => _buildStoreCard(
                     context,
                     value.items[index].id,
