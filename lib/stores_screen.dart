@@ -31,8 +31,9 @@ class StoresScreen extends StatelessWidget {
                   decoration: InputDecoration(
                     hintText: 'Search stores',
                     prefixIcon: IconButton(
-                      icon: const Icon(Icons.search), 
-                      onPressed: () => value.searchForStoreAsync(value.searchController.text),
+                      icon: const Icon(Icons.search),
+                      onPressed: () => value
+                          .searchForStoreAsync(value.searchController.text),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -44,7 +45,7 @@ class StoresScreen extends StatelessWidget {
               // List of Stores
               Expanded(
                 child: ListView.builder(
-                  itemCount:  value.items.length,
+                  itemCount: value.items.length,
                   itemBuilder: (context, index) => _buildStoreCard(
                     context,
                     value.items[index].id,
@@ -70,8 +71,7 @@ class StoresScreen extends StatelessWidget {
           if (storeId == null) {
             return;
           }
-          await Provider.of<ProductsProvider>(context, listen: false)
-              .getProductsAsync(storeId);
+          await Provider.of<ProductsProvider>(context).getProductsAsync(storeId);
 
           // Navigate to ProductsScreen
           Navigator.push(

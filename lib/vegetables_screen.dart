@@ -1,6 +1,8 @@
 import 'package:delivery2/models/product.dart';
+import 'package:delivery2/providers/stores_provider.dart';
+import 'package:delivery2/stores_screen.dart';
 import 'package:flutter/material.dart';
-import 'products_screen.dart';
+import 'package:provider/provider.dart';
 import 'product_details_screen.dart';
 
 class VegetablesScreen extends StatelessWidget {
@@ -55,11 +57,11 @@ class VegetablesScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  _buildCategoryImage(context, 'Cabbage and Lettuce'),
-                  _buildCategoryImage(context, 'Cucumbers and Tomatoes'),
-                  _buildCategoryImage(context, 'Onions and Garlic'),
-                  _buildCategoryImage(context, 'Peppers'),
-                  _buildCategoryImage(context, 'Potatoes and Carrots'),
+                  _buildCategoryImage(context, 'Cabbage and Lettuce', 1),
+                  _buildCategoryImage(context, 'Cucumbers and Tomatoes', 2),
+                  _buildCategoryImage(context, 'Onions and Garlic', null),
+                  _buildCategoryImage(context, 'Peppers', null),
+                  _buildCategoryImage(context, 'Potatoes and Carrots', null),
                 ],
               ),
             ),
@@ -96,16 +98,21 @@ class VegetablesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryImage(BuildContext context, String categoryName) {
+  Widget _buildCategoryImage(BuildContext context, String categoryName, int? categoryId) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
+          if (categoryId == null) {
+            return;
+          }
+          await Provider.of<StoresProvider>(context).getStoresByCategoryIdAsync(categoryId);
+
           // Navigate to the corresponding store screen
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ProductsScreen(storeName: categoryName),
+              builder: (context) => StoresScreen(categoryName: categoryName),
             ),
           );
         },
