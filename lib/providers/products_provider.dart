@@ -1,36 +1,46 @@
 
 
+import 'dart:collection';
+
+import 'package:delivery2/helper/api.dart';
+import 'package:delivery2/models/product.dart';
+import 'package:flutter/material.dart';
+
 class ProductsProvider extends ChangeNotifier {
-  final List<Product> _items = [];
+  List<Product> _items = [];
 
   UnmodifiableListView<Product> get items => UnmodifiableListView(_items);
 
-  getProductsAsync(int storeId) {
-    var data = Api().get(url: '/store/$storeId');
+  getProductsAsync(int storeId) async {
+    var data = await Api().get(url: '/store/$storeId', token: null);
 
     var products = Products.fromJson(data);
 
-    _items = products.list_of_product;
+    _items = products.listOfProduct ?? [];
     notifyListeners();;
   }
 
-  getTopProductsAsync() {
-    var data = Api().get(url: '/products/top3');
+  getTopProductsAsync() async {
+    var data = await Api().get(url: '/products/top3', token: null);
 
     var products = Products.fromJson(data);
 
-    _items = products.list_of_product;
+    _items = products.listOfProduct ?? [];
     notifyListeners();
   }
 
-  searchForProductAsync(String name) {
-    var data = Api().post(url: '/products/search', body: {
-      'name': $name
-    });
+  searchForProductAsync(String name) async {
+    var data = await Api().post(
+      url: '/products/search', 
+      token: null,
+      body: {
+      'name': name
+      }
+    );
 
     var products = Products.fromJson(data);
 
-    _items = products.list_of_product;
+    _items = products.listOfProduct ?? [];
     notifyListeners();
   }
 }

@@ -27,31 +27,31 @@ class Product {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['description'] = this.description;
-    data['store_id'] = this.storeId;
-    data['image'] = this.image;
-    data['quantity'] = this.quantity;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['price'] = price;
+    data['description'] = description;
+    data['store_id'] = storeId;
+    data['image'] = image;
+    data['quantity'] = quantity;
     return data;
   }
 }
 
 class Products {
-  List<Product>? list_of_product;
+  List<Product>? listOfProduct;
 
-  products({this.list_of_product});
+  Products({this.listOfProduct});
 
-  products.fromJson(List<dynamic> jsonList) {
-    list_of_product = <Product>[];
-    jsonList.forEach((v) {
-      list_of_product!.add(new Product.fromJson(v));
-    });
+  Products.fromJson(List<dynamic> jsonList) {
+    listOfProduct = <Product>[];
+    for (var v in jsonList) {
+      listOfProduct!.add(Product.fromJson(v));
+    }
   }
-  
-  List<Map<String, dynamic>> toJson() {
-    return list_of_product.map((v) => v.toJson()).toList();
+
+  List<Map<String, dynamic>>? toJson() {
+    return listOfProduct?.map((v) => v.toJson()).toList();
   }
 }

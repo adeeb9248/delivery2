@@ -1,15 +1,16 @@
+import 'package:delivery2/models/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  final Map<String, dynamic> product;
+  final Product product;
 
-  ProductDetailsScreen({required this.product});
+  const ProductDetailsScreen({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(product['name']),
+        title: Text(product.name ?? 'Product Name'),
         backgroundColor: Colors.purple,
       ),
       body: Padding(
@@ -22,41 +23,41 @@ class ProductDetailsScreen extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
                 child: Image.network(
-                  product['image'],
+                  product.image ?? 'https://via.placeholder.com/150',
                   height: 200,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Product Name
             Text(
-              product['name'],
-              style: TextStyle(
+              product.name ?? 'Product Name',
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.purple,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             // Product Price
             Text(
-              product['price'],
+              product.price ?? '\$\$',
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.grey[700],
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Product Description
             Text(
-              product['description'],
+              product.description ?? 'Product description',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.grey[800],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             // Add to Cart Button
             Center(
               child: SizedBox(
@@ -64,15 +65,15 @@ class ProductDetailsScreen extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple,
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
                   ),
                   onPressed: () {
                     // Add to Cart Logic
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Added ${product['name']} to cart')),
+                      SnackBar(content: Text('Added ${product.name ?? 'Product Name'} to cart')),
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     'Add to Cart',
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),

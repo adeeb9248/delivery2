@@ -1,6 +1,5 @@
 import 'dart:convert';
-import 'package:delivery_app/screens/register/register_screen.dart';
-import 'package:flutter/material.dart';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 class Api {
@@ -22,7 +21,7 @@ class Api {
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
-      print(data);
+      log('$data');
       return data;
     } else {
       throw Exception(
@@ -44,11 +43,11 @@ class Api {
       body: body,
       headers: headers,
     );
-    print('url = $baseURL$url ');
+    log('url = $baseURL$url ');
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
 
-      print(data["message"]);
+      log(data["message"]);
 
       return data;
     } else {

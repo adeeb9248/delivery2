@@ -1,34 +1,49 @@
+import 'package:delivery2/models/product.dart';
 import 'package:flutter/material.dart';
 import 'products_screen.dart';
 import 'product_details_screen.dart';
 
 class VegetablesScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> vegetables = [
-    {
-      'name': 'Boston Lettuce',
-      'image': 'https://www.thespruceeats.com/thmb/xna3brlTYvIfpbzwrqhoHKzHKn0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/what-is-butter-lettuce-4773670-hero-06-0b9d54128b3e48e081015e17b5764c39.jpg',
-      'price': '1.10 €/piece',
-      'description': 'Fresh Boston Lettuce, perfect for your salads!',
-    },
-    {
-      'name': 'Purple Cauliflower',
-      'image': 'https://m.media-amazon.com/images/I/71yTV1+FI0L.jpg',
-      'price': '1.85 €/kg',
-      'description': 'Exotic purple cauliflower, rich in antioxidants.',
-    },
-    {
-      'name': 'Savoy Cabbage',
-      'image': 'https://media-cdn2.greatbritishchefs.com/media/yrkhs1dh/img12504.whqc_1426x713q80.jpg',
-      'price': '1.45 €/kg',
-      'description': 'Crunchy savoy cabbage, ideal for your recipes.',
-    },
+
+  final List<Product> vegetables = [
+    Product(
+      id: 0,
+      name: 'Boston Lettuce',
+      price: '1.10 €/piece',
+      description: 'Fresh Boston Lettuce, perfect for your salads!',
+      storeId: 0,
+      image:
+          'https://www.thespruceeats.com/thmb/xna3brlTYvIfpbzwrqhoHKzHKn0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/what-is-butter-lettuce-4773670-hero-06-0b9d54128b3e48e081015e17b5764c39.jpg',
+      quantity: 10,
+    ),
+    Product(
+      id: 0,
+      name: 'Purple Cauliflower',
+      price: '1.85 €/kg',
+      description: 'Exotic purple cauliflower, rich in antioxidants.',
+      storeId: 0,
+      image: 'https://m.media-amazon.com/images/I/71yTV1+FI0L.jpg',
+      quantity: 10,
+    ),
+    Product(
+      id: 0,
+      name: 'Savoy Cabbage',
+      price: '1.45 €/kg',
+      description: 'Crunchy savoy cabbage, ideal for your recipes.',
+      storeId: 0,
+      image:
+          'https://media-cdn2.greatbritishchefs.com/media/yrkhs1dh/img12504.whqc_1426x713q80.jpg',
+      quantity: 10,
+    )
   ];
+
+  VegetablesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Categories'),
+        title: const Text('Categories'),
         backgroundColor: Colors.purple,
       ),
       body: Padding(
@@ -48,9 +63,9 @@ class VegetablesScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             // Top Products Text
-            Text(
+            const Text(
               'Top Products',
               style: TextStyle(
                 fontSize: 20,
@@ -58,7 +73,7 @@ class VegetablesScreen extends StatelessWidget {
                 color: Colors.purple,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             // Top 3 Vegetables
             Expanded(
               child: ListView.builder(
@@ -71,13 +86,13 @@ class VegetablesScreen extends StatelessWidget {
           ],
         ),
       ),
-       bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.grid_view), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: ''),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.grid_view), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: ''),
+        ],
+      ),
     );
   }
 
@@ -102,17 +117,19 @@ class VegetablesScreen extends StatelessWidget {
               height: 120,
               fit: BoxFit.cover,
             ),
-            SizedBox(height: 5),
-            Text(categoryName, style: TextStyle(fontSize: 14, color: Colors.purple)),
+            const SizedBox(height: 5),
+            Text(categoryName,
+                style: const TextStyle(fontSize: 14, color: Colors.purple)),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildVegetableCard(BuildContext context, Map<String, dynamic> vegetable) {
+  Widget _buildVegetableCard(
+      BuildContext context, Product vegetable) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: InkWell(
         onTap: () {
           // Navigate to ProductDetailsScreen
@@ -125,25 +142,25 @@ class VegetablesScreen extends StatelessWidget {
         },
         child: Container(
           height: 120,
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
               // Product Image
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
-                  vegetable['image'],
+                  vegetable.image ?? 'https://m.media-amazon.com/images/I/71yTV1+FI0L.jpg',
                   width: 100,
                   height: 100,
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               // Product Name
               Expanded(
                 child: Text(
-                  vegetable['name'],
-                  style: TextStyle(
+                  vegetable.name ?? 'Product Name',
+                  style: const TextStyle(
                     color: Colors.purple,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,

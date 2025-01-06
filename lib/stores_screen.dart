@@ -1,10 +1,13 @@
+import 'package:delivery2/providers/products_provider.dart';
+import 'package:delivery2/providers/stores_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'products_screen.dart';
 
 class StoresScreen extends StatelessWidget {
   final String categoryName;
 
-  StoresScreen({required this.categoryName});
+  const StoresScreen({super.key, required this.categoryName});
 
   @override
   Widget build(BuildContext context) {
@@ -15,55 +18,60 @@ class StoresScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            // Search Bar
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search stores',
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+        child: Consumer<StoresProvider>(
+          builder:
+              (BuildContext context, StoresProvider value, Widget? child) =>
+                  Column(
+            children: [
+              // Search Bar
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: TextField(
+                  controller: value.searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search stores',
+                    prefixIcon: IconButton(
+                      icon: const Icon(Icons.search), 
+                      onPressed: () => value.searchForStoreAsync(value.searchController.text),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 10),
-            // List of Stores
-            Expanded(
-              child: ListView(
-                children: [
-                  _buildStoreCard(
+              const SizedBox(height: 10),
+              // List of Stores
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, index) => _buildStoreCard(
                     context,
-                    'Fresh Vegetables Store',
-                    'https://via.placeholder.com/150',
+                    value.items[index].id,
+                    value.items[index].name ?? "Store Name",
+                    value.items[index].image ??
+                        'https://via.placeholder.com/150',
                   ),
-                  _buildStoreCard(
-                    context,
-                    'Organic Farm Market',
-                    'https://via.placeholder.com/150',
-                  ),
-                  _buildStoreCard(
-                    context,
-                    'Greenhouse Produce',
-                    'https://via.placeholder.com/150',
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildStoreCard(BuildContext context, String storeName, String imageUrl) {
+  Widget _buildStoreCard(
+      BuildContext context, int? storeId, String storeName, String imageUrl) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
       child: InkWell(
-        onTap: () {
+        onTap: () async {
+          if (storeId == null) {
+            return;
+          }
+          await Provider.of<ProductsProvider>(context, listen: false)
+              .getProductsAsync(storeId);
+
           // Navigate to ProductsScreen
           Navigator.push(
             context,
@@ -74,7 +82,7 @@ class StoresScreen extends StatelessWidget {
         },
         child: Container(
           height: 120,
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
               // Placeholder Image
@@ -87,12 +95,12 @@ class StoresScreen extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               // Store Name
               Expanded(
                 child: Text(
                   storeName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.purple,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,

@@ -1,49 +1,70 @@
+import 'dart:collection';
+import 'dart:convert';
 
+import 'package:delivery2/helper/api.dart';
+import 'package:delivery2/models/porduct_to_send.dart';
+import 'package:delivery2/models/stores.dart';
+import 'package:flutter/material.dart';
 
 class StoresProvider extends ChangeNotifier {
-  final List<Store> _items = [];
+  List<Store> _items = [];
+  String? message;
+  TextEditingController searchController = TextEditingController(); 
+
   UnmodifiableListView<Store> get items => UnmodifiableListView(_items);
 
-  ProductToSendList productToSendList = [];
+  ProductToSendList? productToSendList;
   void add(int productId, int quantity) {
-    productToSendList.add(new ProductToSend(productId.tostirng(), quantity.tostirng()));
+    productToSendList?.products.add(
+      ProductToSend(
+        productId: productId.toString(), quantity: quantity.toString()
+      )
+    );
   }
 
   void removeAll() {
-    productToSendList.clear();
+    productToSendList?.products.clear();
   }
 
-  getAllStoresAsync() {
-    var data = Api().get(url: '/stores');
+  getAllStoresAsync() async {
+    var data = await Api().get(url: '/stores', token: null);
 
     var stores = Stores.fromJson(data);
 
-    _items = stores.list_of_store;
+    _items = stores.listOfStore ?? [];
     notifyListeners();
   }
 
-  getStoresByCategoryIdAsync(int categoryId) {
-    var data = Api().get(url: '/category/$categoryId');
+  getStoresByCategoryIdAsync(int categoryId) async {
+    var data = await Api().get(url: '/category/$categoryId', token: null);
 
     var stores = Stores.fromJson(data);
 
-    _items = stores.list_of_store;
+    _items = stores.listOfStore ?? [];
     notifyListeners();
   }
 
-  searchForStoreAsync(String name) {
-    var data = Api().post(url: '/store/search', body: {
-      'name': $name
-    });
+  searchForStoreAsync(String name) async {
+    var data = await Api().post(
+      url: '/store/search', 
+      token: null,
+      body: {
+        'name': name
+      }, 
+    );
 
     var products = Stores.fromJson(data);
 
-    _items = products.list_of_product;
+    _items = products.listOfStore ?? [];
     notifyListeners();
   }
 
-  addPurchasesAsync() {
-    var data = Api().post(url: '/Purchases/store', body: json.encode(productToSendList.toJson()));
+  addPurchasesAsync() async {
+    var data = await Api().post(
+        url: '/Purchases/store',
+        token: null,
+        body: jsonEncode(productToSendList?.toJson())
+    );
 
     message = data as String;
 

@@ -1,5 +1,9 @@
+import 'package:delivery2/providers/product_details_provider.dart';
+import 'package:delivery2/providers/products_provider.dart';
+import 'package:delivery2/providers/stores_provider.dart';
 import 'package:flutter/material.dart';
-import 'vegetables_screen.dart'; // Import the file
+import 'package:provider/provider.dart';
+import 'vegetables_screen.dart'; 
 
 void main() {
   runApp(
@@ -9,7 +13,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => ProductsProvider()),
         ChangeNotifierProvider(create: (context) => StoresProvider()),
       ],
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 
