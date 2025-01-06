@@ -2,7 +2,17 @@ import 'package:flutter/material.dart';
 import 'vegetables_screen.dart'; // Import the file
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ProductDetailsProvider()),
+        ChangeNotifierProvider(create: (context) => ProductsProvider()),
+        ChangeNotifierProvider(create: (context) => StoresProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
+
 }
 
 class MyApp extends StatelessWidget {
