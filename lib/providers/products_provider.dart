@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 class ProductsProvider extends ChangeNotifier {
   List<Product> _items = [];
 
+  TextEditingController searchController = TextEditingController(); 
+
   UnmodifiableListView<Product> get items => UnmodifiableListView(_items);
 
   getProductsAsync(int storeId) async {
