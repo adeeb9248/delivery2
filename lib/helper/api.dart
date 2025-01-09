@@ -20,7 +20,7 @@ class Api {
     );
 
     if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
+      dynamic data = jsonDecode(response.body);
       log('$data');
       return data;
     } else {
@@ -45,7 +45,7 @@ class Api {
     );
     log('url = $baseURL$url ');
     if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
+      dynamic data = jsonDecode(response.body);
 
       log(data["message"]);
 
